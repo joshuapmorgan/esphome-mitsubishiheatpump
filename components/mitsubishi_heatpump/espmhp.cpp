@@ -248,6 +248,7 @@ void MitsubishiHeatPump::control(const climate::ClimateCall &call) {
 
 void MitsubishiHeatPump::hpSettingsChanged() {
     heatpumpSettings currentSettings = hp->getSettings();
+    ESP_LOGD(TAG, "in hpSettingsChanged");
 
     if (currentSettings.power == NULL) {
         /*
@@ -281,6 +282,7 @@ void MitsubishiHeatPump::hpSettingsChanged() {
             this->action = climate::CLIMATE_ACTION_DRYING;
         } else if (strcmp(currentSettings.mode, "COOL") == 0) {
             this->mode = climate::CLIMATE_MODE_COOL;
+            ESP_LOGD(TAG, "currentSettings.mode == COOL");
             if (cool_setpoint != currentSettings.temperature) {
                 cool_setpoint = currentSettings.temperature;
                 save(currentSettings.temperature, cool_storage);
